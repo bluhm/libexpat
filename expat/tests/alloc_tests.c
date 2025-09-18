@@ -2139,16 +2139,8 @@ START_TEST(test_alloc_tracker_maximum_amplification) {
               == XML_STATUS_OK);
 
 #if XML_GE == 1
-  // Stop activation threshold from interfering
-  assert_true(XML_SetAllocTrackerActivationThreshold(parser, 0) == XML_TRUE);
-
   // Exceed maximum amplification: should be rejected.
   assert_true(expat_malloc(parser, 1000, -1) == NULL);
-
-  // Increase maximum amplification, and try the same amount once more: should
-  // work.
-  assert_true(XML_SetAllocTrackerMaximumAmplification(parser, 3000.0f)
-              == XML_TRUE);
 
   void *const ptr = expat_malloc(parser, 1000, -1);
   assert_true(ptr != NULL);
@@ -2169,7 +2161,6 @@ START_TEST(test_alloc_tracker_threshold) {
   expat_free(parser, ptr, -1);
 
   // Exceed maximum amplification *after* threshold: should be rejected.
-  assert_true(XML_SetAllocTrackerActivationThreshold(parser, 999) == XML_TRUE);
   assert_true(expat_malloc(parser, 1000, -1) == NULL);
 #endif
 
@@ -2181,9 +2172,6 @@ START_TEST(test_alloc_tracker_getbuffer_unlimited) {
   XML_Parser parser = XML_ParserCreate(NULL);
 
 #if XML_GE == 1
-  // Artificially lower threshold
-  assert_true(XML_SetAllocTrackerActivationThreshold(parser, 0) == XML_TRUE);
-
   // Self-test: Prove that threshold is as rejecting as expected
   assert_true(expat_malloc(parser, 1000, -1) == NULL);
 #endif
@@ -2202,46 +2190,6 @@ START_TEST(test_alloc_tracker_api) {
     fail("parserWithoutParent is NULL");
   if (parserWithParent == NULL)
     fail("parserWithParent is NULL");
-
-#if XML_GE == 1
-  // XML_SetAllocTrackerMaximumAmplification, error cases
-  if (XML_SetAllocTrackerMaximumAmplification(NULL, 123.0f) == XML_TRUE)
-    fail("Call with NULL parser is NOT supposed to succeed");
-  if (XML_SetAllocTrackerMaximumAmplification(parserWithParent, 123.0f)
-      == XML_TRUE)
-    fail("Call with non-root parser is NOT supposed to succeed");
-  if (XML_SetAllocTrackerMaximumAmplification(parserWithoutParent, NAN)
-      == XML_TRUE)
-    fail("Call with NaN limit is NOT supposed to succeed");
-  if (XML_SetAllocTrackerMaximumAmplification(parserWithoutParent, -1.0f)
-      == XML_TRUE)
-    fail("Call with negative limit is NOT supposed to succeed");
-  if (XML_SetAllocTrackerMaximumAmplification(parserWithoutParent, 0.9f)
-      == XML_TRUE)
-    fail("Call with positive limit <1.0 is NOT supposed to succeed");
-
-  // XML_SetAllocTrackerMaximumAmplification, success cases
-  if (XML_SetAllocTrackerMaximumAmplification(parserWithoutParent, 1.0f)
-      == XML_FALSE)
-    fail("Call with positive limit >=1.0 is supposed to succeed");
-  if (XML_SetAllocTrackerMaximumAmplification(parserWithoutParent, 123456.789f)
-      == XML_FALSE)
-    fail("Call with positive limit >=1.0 is supposed to succeed");
-  if (XML_SetAllocTrackerMaximumAmplification(parserWithoutParent, INFINITY)
-      == XML_FALSE)
-    fail("Call with positive limit >=1.0 is supposed to succeed");
-
-  // XML_SetAllocTrackerActivationThreshold, error cases
-  if (XML_SetAllocTrackerActivationThreshold(NULL, 123) == XML_TRUE)
-    fail("Call with NULL parser is NOT supposed to succeed");
-  if (XML_SetAllocTrackerActivationThreshold(parserWithParent, 123) == XML_TRUE)
-    fail("Call with non-root parser is NOT supposed to succeed");
-
-  // XML_SetAllocTrackerActivationThreshold, success cases
-  if (XML_SetAllocTrackerActivationThreshold(parserWithoutParent, 123)
-      == XML_FALSE)
-    fail("Call with non-NULL parentless parser is supposed to succeed");
-#endif // XML_GE == 1
 
   XML_ParserFree(parserWithParent);
   XML_ParserFree(parserWithoutParent);
@@ -2269,10 +2217,6 @@ END_TEST
 
 START_TEST(test_mem_api_unlimited) {
   XML_Parser parser = XML_ParserCreate(NULL);
-
-#if XML_GE == 1
-  assert_true(XML_SetAllocTrackerActivationThreshold(parser, 0) == XML_TRUE);
-#endif
 
   void *ptr = XML_MemMalloc(parser, 1000);
 

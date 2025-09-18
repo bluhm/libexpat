@@ -3031,13 +3031,6 @@ XML_GetFeatureList(void) {
        EXPAT_BILLION_LAUGHS_ATTACK_PROTECTION_ACTIVATION_THRESHOLD_DEFAULT},
       /* Added in Expat 2.6.0. */
       {XML_FEATURE_GE, XML_L("XML_GE"), 0},
-      /* Added in Expat 2.7.2. */
-      {XML_FEATURE_ALLOC_TRACKER_MAXIMUM_AMPLIFICATION_DEFAULT,
-       XML_L("XML_AT_MAX_AMP"),
-       (long int)EXPAT_ALLOC_TRACKER_MAXIMUM_AMPLIFICATION_DEFAULT},
-      {XML_FEATURE_ALLOC_TRACKER_ACTIVATION_THRESHOLD_DEFAULT,
-       XML_L("XML_AT_ACT_THRES"),
-       (long int)EXPAT_ALLOC_TRACKER_ACTIVATION_THRESHOLD_DEFAULT},
 #endif
       {XML_FEATURE_END, NULL, 0}};
 
@@ -3064,29 +3057,6 @@ XML_SetBillionLaughsAttackProtectionActivationThreshold(
     return XML_FALSE;
   }
   parser->m_accounting.activationThresholdBytes = activationThresholdBytes;
-  return XML_TRUE;
-}
-
-XML_Bool XMLCALL
-XML_SetAllocTrackerMaximumAmplification(XML_Parser parser,
-                                        float maximumAmplificationFactor) {
-  if ((parser == NULL) || (parser->m_parentParser != NULL)
-      || isnan(maximumAmplificationFactor)
-      || (maximumAmplificationFactor < 1.0f)) {
-    return XML_FALSE;
-  }
-  parser->m_alloc_tracker.maximumAmplificationFactor
-      = maximumAmplificationFactor;
-  return XML_TRUE;
-}
-
-XML_Bool XMLCALL
-XML_SetAllocTrackerActivationThreshold(
-    XML_Parser parser, unsigned long long activationThresholdBytes) {
-  if ((parser == NULL) || (parser->m_parentParser != NULL)) {
-    return XML_FALSE;
-  }
-  parser->m_alloc_tracker.activationThresholdBytes = activationThresholdBytes;
   return XML_TRUE;
 }
 #endif /* XML_GE == 1 */
