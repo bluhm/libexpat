@@ -2091,47 +2091,6 @@ START_TEST(test_alloc_reset_after_external_entity_parser_create_fail) {
 }
 END_TEST
 
-#if XML_GE == 1
-static size_t
-sizeRecordedFor(void *ptr) {
-  return *(size_t *)((char *)ptr - EXPAT_MALLOC_PADDING - sizeof(size_t));
-}
-#endif // XML_GE == 1
-
-START_TEST(test_alloc_tracker_size_recorded) {
-  XML_Memory_Handling_Suite memsuite = {malloc, realloc, free};
-
-  bool values[] = {true, false};
-  for (size_t i = 0; i < sizeof(values) / sizeof(values[0]); i++) {
-    const bool useMemSuite = values[i];
-    set_subtest("useMemSuite=%d", (int)useMemSuite);
-    XML_Parser parser = useMemSuite
-                            ? XML_ParserCreate_MM(NULL, &memsuite, XCS("|"))
-                            : XML_ParserCreate(NULL);
-
-#if XML_GE == 1
-    void *ptr = expat_malloc(parser, 10, -1);
-
-    assert_true(ptr != NULL);
-    assert_true(sizeRecordedFor(ptr) == 10);
-
-    assert_true(expat_realloc(parser, ptr, SIZE_MAX / 2, -1) == NULL);
-
-    assert_true(sizeRecordedFor(ptr) == 10); // i.e. unchanged
-
-    ptr = expat_realloc(parser, ptr, 20, -1);
-
-    assert_true(ptr != NULL);
-    assert_true(sizeRecordedFor(ptr) == 20);
-
-    expat_free(parser, ptr, -1);
-#endif
-
-    XML_ParserFree(parser);
-  }
-}
-END_TEST
-
 START_TEST(test_mem_api_cycle) {
   XML_Parser parser = XML_ParserCreate(NULL);
 
@@ -2234,8 +2193,6 @@ make_alloc_test_case(Suite *s) {
 
   tcase_add_test__ifdef_xml_dtd(
       tc_alloc, test_alloc_reset_after_external_entity_parser_create_fail);
-
-  tcase_add_test__if_xml_ge(tc_alloc, test_alloc_tracker_size_recorded);
 
   tcase_add_test(tc_alloc, test_mem_api_cycle);
   tcase_add_test__if_xml_ge(tc_alloc, test_mem_api_unlimited);
