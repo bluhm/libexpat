@@ -46,10 +46,6 @@
                     reached, a maximum amplification factor (that defaults to
                     100.0) is enforced, and violating documents are rejected
                     with an out-of-memory error.
-                    There are two new API functions to fine-tune this new
-                    behavior:
-                      - XML_SetAllocTrackerActivationThreshold
-                      - XML_SetAllocTrackerMaximumAmplification .
                     If you ever need to increase these defaults for non-attack
                     XML payload, please file a bug report with libexpat.
                       There is also a new environment variable
