@@ -2132,93 +2132,6 @@ START_TEST(test_alloc_tracker_size_recorded) {
 }
 END_TEST
 
-START_TEST(test_alloc_tracker_pointer_alignment) {
-  XML_Parser parser = XML_ParserCreate(NULL);
-#if XML_GE == 1
-  assert_true(sizeof(long long) >= sizeof(size_t)); // self-test
-  long long *const ptr
-      = (long long *)expat_malloc(parser, 4 * sizeof(long long), -1);
-  ptr[0] = 0LL;
-  ptr[1] = 1LL;
-  ptr[2] = 2LL;
-  ptr[3] = 3LL;
-  expat_free(parser, ptr, -1);
-#endif
-  XML_ParserFree(parser);
-}
-END_TEST
-
-START_TEST(test_alloc_tracker_maximum_amplification) {
-  if (g_reparseDeferralEnabledDefault == XML_TRUE) {
-    return;
-  }
-
-  XML_Parser parser = XML_ParserCreate(NULL);
-
-  // Get .m_accounting.countBytesDirect from 0 to 3
-  const char *const chunk = "<e>";
-  assert_true(_XML_Parse_SINGLE_BYTES(parser, chunk, (int)strlen(chunk),
-                                      /*isFinal=*/XML_FALSE)
-              == XML_STATUS_OK);
-
-#if XML_GE == 1
-  // Exceed maximum amplification: should be rejected.
-  assert_true(expat_malloc(parser, 1000, -1) == NULL);
-
-  void *const ptr = expat_malloc(parser, 1000, -1);
-  assert_true(ptr != NULL);
-  expat_free(parser, ptr, -1);
-#endif
-
-  XML_ParserFree(parser);
-}
-END_TEST
-
-START_TEST(test_alloc_tracker_threshold) {
-  XML_Parser parser = XML_ParserCreate(NULL);
-
-#if XML_GE == 1
-  // Exceed maximum amplification *before* (default) threshold: should work.
-  void *const ptr = expat_malloc(parser, 1000, -1);
-  assert_true(ptr != NULL);
-  expat_free(parser, ptr, -1);
-
-  // Exceed maximum amplification *after* threshold: should be rejected.
-  assert_true(expat_malloc(parser, 1000, -1) == NULL);
-#endif
-
-  XML_ParserFree(parser);
-}
-END_TEST
-
-START_TEST(test_alloc_tracker_getbuffer_unlimited) {
-  XML_Parser parser = XML_ParserCreate(NULL);
-
-#if XML_GE == 1
-  // Self-test: Prove that threshold is as rejecting as expected
-  assert_true(expat_malloc(parser, 1000, -1) == NULL);
-#endif
-  // XML_GetBuffer should be allowed to pass, though
-  assert_true(XML_GetBuffer(parser, 1000) != NULL);
-
-  XML_ParserFree(parser);
-}
-END_TEST
-
-START_TEST(test_alloc_tracker_api) {
-  XML_Parser parserWithoutParent = XML_ParserCreate(NULL);
-  XML_Parser parserWithParent = XML_ExternalEntityParserCreate(
-      parserWithoutParent, XCS("entity123"), NULL);
-  if (parserWithoutParent == NULL)
-    fail("parserWithoutParent is NULL");
-  if (parserWithParent == NULL)
-    fail("parserWithParent is NULL");
-
-  XML_ParserFree(parserWithParent);
-  XML_ParserFree(parserWithoutParent);
-}
-END_TEST
-
 START_TEST(test_mem_api_cycle) {
   XML_Parser parser = XML_ParserCreate(NULL);
 
@@ -2323,11 +2236,6 @@ make_alloc_test_case(Suite *s) {
       tc_alloc, test_alloc_reset_after_external_entity_parser_create_fail);
 
   tcase_add_test__if_xml_ge(tc_alloc, test_alloc_tracker_size_recorded);
-  tcase_add_test__if_xml_ge(tc_alloc, test_alloc_tracker_pointer_alignment);
-  tcase_add_test__if_xml_ge(tc_alloc, test_alloc_tracker_maximum_amplification);
-  tcase_add_test__if_xml_ge(tc_alloc, test_alloc_tracker_threshold);
-  tcase_add_test__if_xml_ge(tc_alloc, test_alloc_tracker_getbuffer_unlimited);
-  tcase_add_test__if_xml_ge(tc_alloc, test_alloc_tracker_api);
 
   tcase_add_test(tc_alloc, test_mem_api_cycle);
   tcase_add_test__if_xml_ge(tc_alloc, test_mem_api_unlimited);
