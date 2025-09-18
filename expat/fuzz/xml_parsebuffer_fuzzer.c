@@ -101,17 +101,15 @@ LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
 
   XML_Parser externalEntityParser
       = XML_ExternalEntityParserCreate(parentParser, "e1", NULL);
-  if (externalEntityParser != NULL) {
-    ParseOneInput(externalEntityParser, data, size);
-    XML_ParserFree(externalEntityParser);
-  }
+  assert(externalEntityParser);
+  ParseOneInput(externalEntityParser, data, size);
+  XML_ParserFree(externalEntityParser);
 
   XML_Parser externalDtdParser
       = XML_ExternalEntityParserCreate(parentParser, NULL, NULL);
-  if (externalDtdParser != NULL) {
-    ParseOneInput(externalDtdParser, data, size);
-    XML_ParserFree(externalDtdParser);
-  }
+  assert(externalDtdParser);
+  ParseOneInput(externalDtdParser, data, size);
+  XML_ParserFree(externalDtdParser);
 
   // finally frees this parser which served as parent
   XML_ParserFree(parentParser);
