@@ -46,16 +46,10 @@
 #  undef NDEBUG /* because test suite relies on assert(...) at the moment */
 #endif
 
-#include <math.h> /* NAN, INFINITY */
-#include <stdbool.h>
-#include <stdint.h> /* for SIZE_MAX */
 #include <string.h>
 #include <assert.h>
 
-#include "expat_config.h"
-
 #include "expat.h"
-#include "internal.h"
 #include "common.h"
 #include "minicheck.h"
 #include "dummy.h"
@@ -2091,42 +2085,6 @@ START_TEST(test_alloc_reset_after_external_entity_parser_create_fail) {
 }
 END_TEST
 
-START_TEST(test_mem_api_cycle) {
-  XML_Parser parser = XML_ParserCreate(NULL);
-
-  void *ptr = XML_MemMalloc(parser, 10);
-
-  assert_true(ptr != NULL);
-  memset(ptr, 'x', 10); // assert writability, with ASan in mind
-
-  ptr = XML_MemRealloc(parser, ptr, 20);
-
-  assert_true(ptr != NULL);
-  memset(ptr, 'y', 20); // assert writability, with ASan in mind
-
-  XML_MemFree(parser, ptr);
-
-  XML_ParserFree(parser);
-}
-END_TEST
-
-START_TEST(test_mem_api_unlimited) {
-  XML_Parser parser = XML_ParserCreate(NULL);
-
-  void *ptr = XML_MemMalloc(parser, 1000);
-
-  assert_true(ptr != NULL);
-
-  ptr = XML_MemRealloc(parser, ptr, 2000);
-
-  assert_true(ptr != NULL);
-
-  XML_MemFree(parser, ptr);
-
-  XML_ParserFree(parser);
-}
-END_TEST
-
 void
 make_alloc_test_case(Suite *s) {
   TCase *tc_alloc = tcase_create("allocation tests");
@@ -2193,7 +2151,4 @@ make_alloc_test_case(Suite *s) {
 
   tcase_add_test__ifdef_xml_dtd(
       tc_alloc, test_alloc_reset_after_external_entity_parser_create_fail);
-
-  tcase_add_test(tc_alloc, test_mem_api_cycle);
-  tcase_add_test__if_xml_ge(tc_alloc, test_mem_api_unlimited);
 }
