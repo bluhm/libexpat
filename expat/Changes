@@ -37,6 +37,13 @@
 !! THANK YOU!                        Sebastian Pipping -- Berlin, 2024-03-09 !!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+        Security fixes:
+           #1059  Fix a class of false positives where input should have been
+                    rejected with error XML_ERROR_ASYNC_ENTITY; regression from
+                    CVE-2024-8176 fix pull request #973 (of Expat 2.7.0 and
+                    related backports). Please check the added unit tests for
+                    example documents.
+
         Other changes:
            #1043  Prove and regression-proof absence of integer overflow
                     from function expat_realloc
