@@ -37,6 +37,9 @@
 !! THANK YOU!                        Sebastian Pipping -- Berlin, 2024-03-09 !!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+        Other changes:
+           #1062  Remove "harmless" cast that truncated a size_t to unsigned
+
         Security fixes:
      #1018 #1034  CVE-2025-59375 -- Disallow use of disproportional amounts of
                     dynamic memory from within an Expat parser (e.g. previously
