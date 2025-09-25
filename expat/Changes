@@ -38,6 +38,8 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         Other changes:
+           #1043  Prove and regression-proof absence of integer overflow
+                    from function expat_realloc
            #1062  Remove "harmless" cast that truncated a size_t to unsigned
 
         Security fixes:
