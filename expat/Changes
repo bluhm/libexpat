@@ -67,6 +67,9 @@
                     too much and too little at the same time. Appending ".diff"
                     to the pull request URL could be of help.
 
+        Other changes:
+           #1036  Drop casts around malloc/free/realloc that C99 does not need
+
 Release 2.7.1 Thu March 27 2025
         Bug fixes:
        #980 #989  Restore event pointer behavior from Expat 2.6.4
