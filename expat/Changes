@@ -266,7 +266,7 @@ Fri April 24 2026
             Jérôme Duval
             Matthew Fernandez
 
-Release 2.7.5 Tue March 17 2026
+Tue March 17 2026
         Security fixes:
            #1158  CVE-2026-32776 -- Fix NULL function pointer dereference for
                     empty external parameter entities; it takes use of both
@@ -313,7 +313,7 @@ Release 2.7.5 Tue March 17 2026
             OSS-Fuzz / ClusterFuzz
             Trail of Bits
 
-Release 2.7.4 Sat January 31 2026
+Sat January 31 2026
         Security fixes:
            #1131  CVE-2026-24515 -- Function XML_ExternalEntityParserCreate
                     failed to copy the encoding handler data passed to
