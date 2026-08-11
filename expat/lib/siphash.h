@@ -102,7 +102,7 @@
 
 #include <stddef.h> /* size_t */
 #include <stdint.h> /* uint64_t uint32_t uint8_t */
-#include "fallthrough.h"
+#define EXPAT_FALLTHROUGH do {} while(0)
 
 /*
  * Workaround to not require a C++11 compiler for using ULL suffix

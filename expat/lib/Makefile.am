@@ -57,42 +57,6 @@ libexpat_la_SOURCES = \
     xmltok.c \
     xmlrole.c
 
-if WITH_ARC4RANDOM
-    libexpat_la_SOURCES += \
-        random_arc4random.c \
-        random_arc4random.h
-endif
-
-if WITH_ARC4RANDOM_BUF
-    libexpat_la_SOURCES += \
-        random_arc4random_buf.c \
-        random_arc4random_buf.h
-endif
-
-if ! MINGW
-    libexpat_la_SOURCES += \
-        random_dev_urandom.c \
-        random_dev_urandom.h
-endif
-
-if WITH_GETENTROPY
-    libexpat_la_SOURCES += \
-        random_getentropy.c \
-        random_getentropy.h
-endif
-
-if WITH_EITHER_GETRANDOM
-    libexpat_la_SOURCES += \
-        random_getrandom.c \
-        random_getrandom.h
-endif
-
-if MINGW
-    libexpat_la_SOURCES += \
-        random_rand_s.c \
-        random_rand_s.h
-endif
-
 if WITH_TESTS
 libtestpat_la_CPPFLAGS = -DXML_TESTING
 
@@ -114,17 +78,14 @@ EXTRA_DIST = \
     asciitab.h \
     expat_external.h \
     expat.h \
-    fallthrough.h \
     iasciitab.h \
     internal.h \
     latin1tab.h \
     libexpat.def.cmake \
-    memory_sanitizer.h \
     nametab.h \
     siphash.h \
     utf8tab.h \
     winconfig.h \
-    xcsinc.c \
     xmlrole.h \
     xmltok.h \
     xmltok_impl.c \

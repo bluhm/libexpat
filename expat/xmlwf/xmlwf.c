@@ -60,7 +60,7 @@
 #include "expat.h"
 #include "codepage.h"
 #include "internal.h" /* for UNUSED_P only */
-#include "fallthrough.h"
+#define EXPAT_FALLTHROUGH do {} while(0)
 #include "xmlfile.h"
 #include "xmltchar.h"
 
@@ -72,7 +72,7 @@
 #  include <wchar.h>
 #endif
 
-#include "../lib/xcsinc.c"
+#define xcslen(s) (strlen(s))
 
 enum ExitCode {
   XMLWF_EXIT_SUCCESS = 0,

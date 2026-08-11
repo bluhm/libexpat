@@ -62,7 +62,7 @@
 #endif
 
 #include "internal.h"
-#include "fallthrough.h"
+#define EXPAT_FALLTHROUGH do {} while(0)
 #include "xmltok.h"
 #include "nametab.h"
 

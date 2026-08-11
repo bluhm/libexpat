@@ -49,7 +49,7 @@
 #include <string.h>
 
 #include "chardata.h"
-#include "../lib/xcsinc.c"
+#define xcslen(s) (strlen(s))
 
 void
 CharData_Init(CharData *storage) {

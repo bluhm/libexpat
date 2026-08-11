@@ -340,9 +340,6 @@ set(EXTRA_COMPILE_FLAGS)
 if(FLAG_WSTRICT_ALIASING)
     set(EXTRA_COMPILE_FLAGS "${EXTRA_COMPILE_FLAGS} -Wstrict-aliasing=3")
 endif()
-if(FLAG_WIMPLICIT_FALLTHROUGH)
-    set(EXTRA_COMPILE_FLAGS "${EXTRA_COMPILE_FLAGS} -Wimplicit-fallthrough")
-endif()
 if(FLAG_VISIBILITY)
   if(EXPAT_SHARED_LIBS)
      add_definitions(-DXML_ENABLE_VISIBILITY=1)
@@ -419,54 +416,6 @@ set(_EXPAT_C_SOURCES
 #   lib/xmltok_impl.c
 #   lib/xmltok_ns.c
 )
-
-if(HAVE_ARC4RANDOM)
-    set(_EXPAT_C_SOURCES
-        ${_EXPAT_C_SOURCES}
-        lib/random_arc4random.c
-        lib/random_arc4random.h
-    )
-endif()
-
-if(HAVE_ARC4RANDOM_BUF)
-    set(_EXPAT_C_SOURCES
-        ${_EXPAT_C_SOURCES}
-        lib/random_arc4random_buf.c
-        lib/random_arc4random_buf.h
-    )
-endif()
-
-if(EXPAT_DEV_URANDOM)
-    set(_EXPAT_C_SOURCES
-        ${_EXPAT_C_SOURCES}
-        lib/random_dev_urandom.c
-        lib/random_dev_urandom.h
-    )
-endif()
-
-if(HAVE_GETENTROPY)
-    set(_EXPAT_C_SOURCES
-        ${_EXPAT_C_SOURCES}
-        lib/random_getentropy.c
-        lib/random_getentropy.h
-    )
-endif()
-
-if(HAVE_GETRANDOM OR HAVE_SYSCALL_GETRANDOM)
-    set(_EXPAT_C_SOURCES
-        ${_EXPAT_C_SOURCES}
-        lib/random_getrandom.c
-        lib/random_getrandom.h
-    )
-endif()
-
-if(WIN32)
-    set(_EXPAT_C_SOURCES
-        ${_EXPAT_C_SOURCES}
-        lib/random_rand_s.c
-        lib/random_rand_s.h
-    )
-endif()
 
 if(EXPAT_SHARED_LIBS)
     set(_SHARED SHARED)

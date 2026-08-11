@@ -120,31 +120,7 @@
 #include "ascii.h"
 #include "expat.h"
 #include "siphash.h"
-#include "xcsinc.c"
-
-#if defined(HAVE_ARC4RANDOM)
-#  include "random_arc4random.h"
-#endif /* defined(HAVE_ARC4RANDOM) */
-
-#if defined(HAVE_ARC4RANDOM_BUF)
-#  include "random_arc4random_buf.h"
-#endif // defined(HAVE_ARC4RANDOM_BUF)
-
-#if defined(XML_DEV_URANDOM)
-#  include "random_dev_urandom.h"
-#endif /* defined(XML_DEV_URANDOM) */
-
-#if defined(HAVE_GETENTROPY)
-#  include "random_getentropy.h"
-#endif // defined(HAVE_GETENTROPY)
-
-#if defined(HAVE_GETRANDOM) || defined(HAVE_SYSCALL_GETRANDOM)
-#  include "random_getrandom.h"
-#endif /* defined(HAVE_GETRANDOM) || defined(HAVE_SYSCALL_GETRANDOM) */
-
-#if defined(_WIN32)
-#  include "random_rand_s.h"
-#endif /* defined(_WIN32) */
+#define xcslen(s) (strlen(s))
 
 #if ! defined(HAVE_GETRANDOM) && ! defined(HAVE_SYSCALL_GETRANDOM)             \
     && ! defined(HAVE_ARC4RANDOM_BUF) && ! defined(HAVE_ARC4RANDOM)            \
@@ -1114,7 +1090,7 @@ generate_hash_secret_salt(void) {
 
   /* "Failproof" high quality providers: */
 #if defined(HAVE_ARC4RANDOM_BUF)
-  writeRandomBytes_arc4random_buf(&entropy, sizeof(entropy));
+  arc4random_buf(&entropy, sizeof(entropy));
   return ENTROPY_DEBUG("arc4random_buf", entropy);
 #elif defined(HAVE_ARC4RANDOM)
   writeRandomBytes_arc4random(&entropy, sizeof(entropy));
