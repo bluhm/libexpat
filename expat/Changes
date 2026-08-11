@@ -16,7 +16,7 @@
 !!                                   Sebastian Pipping -- Berlin, 2026-08-03 !!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-Release 2.8.3 Mon August 10 2026
+Mon August 10 2026
         Security fixes:
            #1296  CVE-2026-72522 -- Fix an out-of-bounds read and the resulting
                     infinite loop caused by treating low surrogates (Unicode)
@@ -82,7 +82,7 @@ Release 2.8.3 Mon August 10 2026
             Subversion
             zizmor static analysis
 
-Release 2.8.2 Thu June 25 2026
+Thu June 25 2026
         Security fixes:
            #1246  CVE-2026-50219 -- Disallow calls to functions
                     `XML_GetBuffer`, `XML_Parse`, `XML_ParseBuffer`,
@@ -170,7 +170,7 @@ Release 2.8.2 Thu June 25 2026
             Astra Security
             Trail of Bits
 
-Release 2.8.1 Sun May 10 2026
+Sun May 10 2026
         Security fixes:
            #1216  CVE-2026-45186 -- Fix quadratic runtime from attribute name
                     collision checks that allowed denial of service attacks
@@ -200,7 +200,7 @@ Release 2.8.1 Sun May 10 2026
             Nick Wellnhofer
             Tania Somanna
 
-Release 2.8.0 Fri April 24 2026
+Fri April 24 2026
         Security fixes:
        #47 #1183  CVE-2026-41080 -- The existing hash flooding protection
                     (based on SipHash) only used 4 to 8 bytes of entropy for

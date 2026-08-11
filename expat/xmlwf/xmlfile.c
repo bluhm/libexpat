@@ -46,6 +46,7 @@
 #include "expat_config.h"
 
 #include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <stddef.h>
 #include <string.h>

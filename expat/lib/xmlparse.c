@@ -2201,7 +2201,6 @@ XML_SetParamEntityParsing(XML_Parser parser,
 #endif
 }
 
-// DEPRECATED since Expat 2.8.0.
 int XMLCALL
 XML_SetHashSalt(XML_Parser parser, unsigned long hash_salt) {
   if (parser == NULL)
@@ -2227,30 +2226,6 @@ XML_SetHashSalt(XML_Parser parser, unsigned long hash_salt) {
   }
 
   return 1;
-}
-
-XML_Bool XMLCALL
-XML_SetHashSalt16Bytes(XML_Parser parser, const uint8_t entropy[16]) {
-  if (parser == NULL)
-    return XML_FALSE;
-
-  if (entropy == NULL)
-    return XML_FALSE;
-
-  const XML_Parser rootParser = getRootParserOf(parser, NULL);
-  assert(! rootParser->m_parentParser);
-
-  /* block after XML_Parse()/XML_ParseBuffer() has been called */
-  if (parserBusy(rootParser))
-    return XML_FALSE;
-
-  sip_tokey(&(rootParser->m_hash_secret_salt_128), entropy);
-
-  rootParser->m_hash_secret_salt_set = XML_TRUE;
-
-  ENTROPY_DEBUG("explicit(16)", rootParser->m_hash_secret_salt_128);
-
-  return XML_TRUE;
 }
 
 enum XML_Status XMLCALL
