@@ -401,7 +401,7 @@ Sat January 31 2026
                  and
             Artiphishell Inc.
 
-Release 2.7.3 Wed September 24 2025
+Wed September 24 2025
         Security fixes:
      #1046 #1048  Fix alignment of internal allocations for some non-amd64
                     architectures (e.g. sparc32); fixes up on the fix to
@@ -454,7 +454,7 @@ Release 2.7.3 Wed September 24 2025
             OSS-Fuzz / ClusterFuzz
             Z3 Theorem Prover
 
-Release 2.7.2 Tue September 16 2025
+Tue September 16 2025
         Security fixes:
      #1018 #1034  CVE-2025-59375 -- Disallow use of disproportional amounts of
                     dynamic memory from within an Expat parser (e.g. previously
@@ -528,7 +528,7 @@ Release 2.7.2 Tue September 16 2025
             OSS-Fuzz / ClusterFuzz
             Perl XML::Parser
 
-Release 2.7.1 Thu March 27 2025
+Thu March 27 2025
         Bug fixes:
        #980 #989  Restore event pointer behavior from Expat 2.6.4
                     (that the fix to CVE-2024-8176 changed in 2.7.0);
@@ -566,7 +566,7 @@ Release 2.7.1 Thu March 27 2025
                  and
             Perl XML::Parser
 
-Release 2.7.0 Thu March 13 2025
+Thu March 13 2025
         Security fixes:
        #893 #973  CVE-2024-8176 -- Fix crash from chaining a large number
                     of entities caused by stack overflow by resolving use of
@@ -638,7 +638,7 @@ Release 2.7.0 Thu March 13 2025
             Red Hat
             Siemens
 
-Release 2.6.4 Wed November 6 2024
+Wed November 6 2024
         Security fixes:
             #915  CVE-2024-50602 -- Fix crash within function XML_ResumeParser
                     from a NULL pointer dereference by disallowing function
@@ -671,7 +671,7 @@ Release 2.6.4 Wed November 6 2024
             José Eduardo Gutiérrez Conejo
             José Ricardo Cardona Quesada
 
-Release 2.6.3 Wed September 4 2024
+Wed September 4 2024
         Security fixes:
        #887 #890  CVE-2024-45490 -- Calling function XML_ParseBuffer with
                     len < 0 without noticing and then calling XML_GetBuffer
@@ -725,7 +725,7 @@ Release 2.6.3 Wed September 4 2024
             Ferenc Géczi
             TaiYou
 
-Release 2.6.2 Wed March 13 2024
+Wed March 13 2024
         Security fixes:
        #839 #842  CVE-2024-28757 -- Prevent billion laughs attacks with
                     isolated use of external parsers.  Please see the commit
@@ -750,7 +750,7 @@ Release 2.6.2 Wed March 13 2024
             Clang UndefinedBehaviorSanitizer
             OSS-Fuzz / ClusterFuzz
 
-Release 2.6.1 Thu February 29 2024
+Thu February 29 2024
         Bug fixes:
             #817  Make tests independent of CPU speed, and thus more robust
        #828 #836  Expose billion laughs API with XML_DTD defined and

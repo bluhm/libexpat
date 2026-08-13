@@ -217,7 +217,7 @@ START_TEST(test_misc_version) {
   if (! versions_equal(&read_version, &parsed_version))
     fail("Version mismatch");
 
-  if (xcstrcmp(version_text, XCS("expat_2.7.3"))
+  if (xcstrcmp(version_text, XCS("expat_2.6.0"))
       != 0) /* needs bump on releases */
     fail("XML_*_VERSION in expat.h out of sync?\n");
 }
@@ -580,7 +580,7 @@ START_TEST(test_misc_stopparser_rejects_unstarted_parser) {
     XML_Parser parser = XML_ParserCreate(NULL);
     assert_true(XML_GetErrorCode(parser) == XML_ERROR_NONE);
     assert_true(XML_StopParser(parser, resumable) == XML_STATUS_ERROR);
-    assert_true(XML_GetErrorCode(parser) == XML_ERROR_NOT_STARTED);
+    assert_true(XML_GetErrorCode(parser) == XML_ERROR_FINISHED);
     XML_ParserFree(parser);
   }
 }

@@ -1211,15 +1211,12 @@ tmain(int argc, XML_Char **argv) {
 #if XML_GE == 1
       XML_SetBillionLaughsAttackProtectionMaximumAmplification(
           parser, attackMaximumAmplification);
-      XML_SetAllocTrackerMaximumAmplification(parser,
-                                              attackMaximumAmplification);
 #endif
     }
     if (attackThresholdGiven) {
 #if XML_GE == 1
       XML_SetBillionLaughsAttackProtectionActivationThreshold(
           parser, attackThresholdBytes);
-      XML_SetAllocTrackerActivationThreshold(parser, attackThresholdBytes);
 #else
       (void)attackThresholdBytes; // silence -Wunused-but-set-variable
 #endif

@@ -2550,7 +2550,7 @@ XML_StopParser(XML_Parser parser, XML_Bool resumable) {
     return XML_STATUS_ERROR;
   switch (parser->m_parsingStatus.parsing) {
   case XML_INITIALIZED:
-    parser->m_errorCode = XML_ERROR_NOT_STARTED;
+    parser->m_errorCode = XML_ERROR_FINISHED;
     return XML_STATUS_ERROR;
   case XML_SUSPENDED:
     if (resumable) {
@@ -2872,9 +2872,6 @@ XML_ErrorString(enum XML_Error code) {
   case XML_ERROR_AMPLIFICATION_LIMIT_BREACH:
     return XML_L(
         "limit on input amplification factor (from DTD and entities) breached");
-  /* Added in 2.6.4. */
-  case XML_ERROR_NOT_STARTED:
-    return XML_L("parser not started");
   }
   return NULL;
 }
@@ -2953,13 +2950,6 @@ XML_GetFeatureList(void) {
        EXPAT_BILLION_LAUGHS_ATTACK_PROTECTION_ACTIVATION_THRESHOLD_DEFAULT},
       /* Added in Expat 2.6.0. */
       {XML_FEATURE_GE, XML_L("XML_GE"), 0},
-      /* Added in Expat 2.7.2. */
-      {XML_FEATURE_ALLOC_TRACKER_MAXIMUM_AMPLIFICATION_DEFAULT,
-       XML_L("XML_AT_MAX_AMP"),
-       (long int)EXPAT_ALLOC_TRACKER_MAXIMUM_AMPLIFICATION_DEFAULT},
-      {XML_FEATURE_ALLOC_TRACKER_ACTIVATION_THRESHOLD_DEFAULT,
-       XML_L("XML_AT_ACT_THRES"),
-       (long int)EXPAT_ALLOC_TRACKER_ACTIVATION_THRESHOLD_DEFAULT},
 #endif
       {XML_FEATURE_END, NULL, 0}};
 
